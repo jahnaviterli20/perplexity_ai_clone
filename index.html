@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perplexity Clone</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <a href="#" class="nav-item search-box">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Search</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fa-solid fa-desktop"></i>
+                    <span>Computer</span>
+                </a>
+                
+                <div class="nav-divider"></div>
+                
+                <a href="#" class="nav-item" id="new-thread-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>New thread</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>History</span>
+                </a>
+                
+                <div class="nav-divider"></div>
+                
+                <a href="#" class="nav-item">
+                    <i class="fa-regular fa-compass"></i>
+                    <span>Discover</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Spaces</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Finance</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Health</span>
+                </a>
+                
+                <div class="nav-divider"></div>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <span>More</span>
+                </a>
+            </nav>
+
+            <div class="recent-section">
+                <h3 class="recent-title">Recent</h3>
+                <p class="recent-empty">Recent and active threads will appear here.</p>
+            </div>
+
+            <div class="user-section">
+                <a href="#" class="sign-in-btn">
+                    <div class="sign-in-icon">
+                        <i class="fa-solid fa-circle-user fa-lg"></i>
+                    </div>
+                    <span>Sign In</span>
+                    <i class="fa-solid fa-chevron-right chevron-icon"></i>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <h1 class="logo-title">perplexity</h1>
+                <div class="chat-history" style="display: none; width: 100%; max-width: 720px; flex-direction: column; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; overflow-y: auto;"></div>
+                
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <textarea class="search-input" placeholder="Type / for search modes"></textarea>
+                    </div>
+                    <div class="search-controls">
+                        <div class="left-controls">
+                            <input type="file" id="pdf-input" accept="application/pdf" style="display: none;">
+                            <button class="icon-btn" id="attach-btn" style="color: #666;"><i class="fa-solid fa-plus"></i></button>
+                            <div id="file-badge" style="display: none; align-items: center; gap: 6px; padding: 4px 10px; background: #eeeff3; border-radius: 12px; font-size: 12px; color: #555; margin-left: 10px;">
+                                <i class="fa-solid fa-file-pdf" style="color: #c00;"></i>
+                                <span class="file-name">filename.pdf</span>
+                                <i class="fa-solid fa-xmark remove-file" style="margin-left: 4px; cursor: pointer; color: #888;"></i>
+                            </div>
+                            <button class="pill-btn mode-btn">
+                                <i class="fa-solid fa-desktop"></i>
+                                <span>Computer</span>
+                                <i class="fa-solid fa-plus tiny-icon"></i>
+                            </button>
+                        </div>
+                        <div class="right-controls">
+                            <button class="transparent-btn model-select">
+                                Model <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+                            </button>
+                            <button class="icon-btn" style="color: #666;"><i class="fa-solid fa-microphone"></i></button>
+                            <button class="icon-btn dark-btn"><i class="fa-solid fa-bars-staggered"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestions-container">
+                    <div class="suggestions-header">
+                        <i class="fa-solid fa-desktop"></i>
+                        <span>Try Computer</span>
+                    </div>
+                    
+                    <div class="suggestions-filters">
+                        <button class="filter-btn active">
+                            <i class="fa-solid fa-code"></i> Create a prototype
+                        </button>
+                        <button class="filter-btn">
+                            <i class="fa-regular fa-lightbulb"></i> Help me learn
+                        </button>
+                        <button class="filter-btn">
+                            <i class="fa-solid fa-list-check"></i> Organize my life
+                        </button>
+                        <button class="filter-btn">
+                            <i class="fa-solid fa-briefcase"></i> Build a business
+                        </button>
+                    </div>
+
+                    <ul class="suggestions-list">
+                        <li class="suggestion-item">
+                            <span>Set up an automated email or Slack workflow</span>
+                        </li>
+                        <li class="suggestion-item">
+                            <span>Create a mobile app prototype for my idea</span>
+                        </li>
+                        <li class="suggestion-item">
+                            <span>Turn my idea into a functional prototype</span>
+                        </li>
+                        <li class="suggestion-item">
+                            <span>Build a working landing page for my product</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
